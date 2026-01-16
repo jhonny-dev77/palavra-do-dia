@@ -21,13 +21,12 @@
         }
         h1 {
             text-align: center;
-            margin-bottom: 20px;
         }
         .search {
             width: 100%;
             padding: 12px;
             font-size: 16px;
-            margin-bottom: 20px;
+            margin: 15px 0;
             border-radius: 8px;
             border: 1px solid #ccc;
         }
@@ -49,135 +48,68 @@
             color: #555;
             font-size: 14px;
         }
+        button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #333;
+            color: white;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <a href="index.html">
+        <button>⬅ Voltar</button>
+    </a>
+
     <h1>📚 Biblioteca de Palavras</h1>
+
     <input type="text" id="search" class="search" placeholder="Buscar palavra..." onkeyup="filterTable()">
 
-    <table id="wordTable">
+    <table>
         <thead>
-           <tr>
-    <td>Abafar</td>
-    <td>To muffle / To suppress</td>
-    <td>Impedir que algo seja ouvido, percebido ou divulgado.</td>
-    <td class="example">“Eles tentaram abafar a discussão para evitar problemas.”</td>
-</tr>
-
-<tr>
-    <td>Abaixar</td>
-    <td>To lower / To turn down</td>
-    <td>Colocar algo em nível mais baixo; diminuir.</td>
-    <td class="example">“Você pode abaixar o volume, por favor?”</td>
-</tr>
-
-<tr>
-    <td>Abalar</td>
-    <td>To shake / To affect deeply</td>
-    <td>Provocar impacto emocional ou estrutural.</td>
-    <td class="example">“A notícia abalou toda a equipe.”</td>
-</tr>
-
-<tr>
-    <td>Abandonar</td>
-    <td>To abandon</td>
-    <td>Deixar algo ou alguém de forma definitiva.</td>
-    <td class="example">“Ele decidiu abandonar o projeto.”</td>
-</tr>
-
-<tr>
-    <td>Abarcar</td>
-    <td>To encompass / To cover</td>
-    <td>Incluir ou compreender um conjunto amplo.</td>
-    <td class="example">“O plano abarca todas as etapas do processo.”</td>
-</tr>
-
-<tr>
-    <td>Abastecer</td>
-    <td>To supply / To refuel</td>
-    <td>Fornecer o que é necessário; reabastecer.</td>
-    <td class="example">“Vou abastecer o carro antes da viagem.”</td>
-</tr>
-
-<tr>
-    <td>Abater</td>
-    <td>To bring down / To slaughter</td>
-    <td>Fazer cair; reduzir; ou matar animais para consumo.</td>
-    <td class="example">“Os custos foram abatidos do orçamento.”</td>
-</tr>
-
-<tr>
-    <td>Acompanhar</td>
-    <td>To follow / To accompany</td>
-    <td>Ir junto; observar o progresso de algo.</td>
-    <td class="example">“Eu acompanho o projeto desde o início.”</td>
-</tr>
-
-<tr>
-    <td>Aconselhar</td>
-    <td>To advise</td>
-    <td>Dar orientação ou sugestão.</td>
-    <td class="example">“Eu te aconselho a revisar o contrato.”</td>
-</tr>
-
-<tr>
-    <td>Acontecer</td>
-    <td>To happen / To occur</td>
-    <td>Ter lugar; ocorrer.</td>
-    <td class="example">“O problema aconteceu ontem à noite.”</td>
-</tr>
-
-<tr>
-    <td>Acoplar</td>
-    <td>To attach / To couple</td>
-    <td>Unir ou conectar duas partes.</td>
-    <td class="example">“Você pode acoplar esse módulo ao sistema?”</td>
-</tr>
-
-<tr>
-    <td>Acordar</td>
-    <td>To wake up / To agree</td>
-    <td>Despertar do sono ou chegar a um consenso.</td>
-    <td class="example">“Vamos acordar isso na reunião.”</td>
-</tr>
-
-<tr>
-    <td>Acossar</td>
-    <td>To harass / To pressure</td>
-    <td>Perseguir ou pressionar de forma insistente.</td>
-    <td class="example">“Ele se sentiu acossado pelos prazos.”</td>
-</tr>
-
-<tr>
-    <td>Acostumar</td>
-    <td>To get used to</td>
-    <td>Tornar-se habituado a algo.</td>
-    <td class="example">“Você vai se acostumar com a nova rotina.”</td>
-</tr>
-
-<tr>
-    <td>Acreditar</td>
-    <td>To believe</td>
-    <td>Ter fé, confiança ou convicção.</td>
-    <td class="example">“Eu acredito no seu potencial.”</td>
-</tr>
-
-        </tbody>
+            <tr>
+                <th>Português</th>
+                <th>Significado</th>
+                <th>Exemplo</th>
+            </tr>
+        </thead>
+        <tbody id="wordTable"></tbody>
     </table>
 </div>
 
-<script>
-function filterTable() {
-    const input = document.getElementById("search").value.toLowerCase();
-    const rows = document.querySelectorAll("#wordTable tbody tr");
+<script src="palavras.js"></script>
 
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(input) ? "" : "none";
-    });
-}
+<script>
+    const tableBody = document.getElementById("wordTable");
+
+    function loadWords() {
+        words.forEach(w => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${w.word}</td>
+                <td>${w.meaning}</td>
+                <td class="example">“${w.example}”</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function filterTable() {
+        const input = document.getElementById("search").value.toLowerCase();
+        const rows = document.querySelectorAll("#wordTable tr");
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(input) ? "" : "none";
+        });
+    }
+
+    loadWords();
 </script>
 
 </body>
