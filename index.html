@@ -55,12 +55,20 @@
             font-size: 13px;
             color: #666;
         }
+        a {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
     <h1>📖 Palavra do Dia</h1>
+
+    <!-- Botão para abrir a biblioteca de palavras -->
+    <a href="lista.html">
+        <button class="next">📚 Ver todas as palavras</button>
+    </a>
 
     <div class="word" id="word">Carregando...</div>
     <div class="meaning" id="meaning"></div>
@@ -74,7 +82,7 @@
 </div>
 
 <script>
-    // Banco de palavras
+    // Banco de palavras (você pode ampliar à vontade)
     const words = [
         { word: "Sutil", meaning: "Algo delicado, discreto, quase imperceptível.", example: "A diferença é sutil, mas importante." },
         { word: "Conciso", meaning: "Que é dito de forma breve e clara.", example: "Seja conciso na explicação." },
@@ -83,7 +91,13 @@
         { word: "Meticuloso", meaning: "Muito cuidadoso e detalhista.", example: "O designer é meticuloso com cada detalhe." },
         { word: "Inerente", meaning: "Que é próprio de algo, faz parte da sua natureza.", example: "O risco é inerente ao negócio." },
         { word: "Parcimonioso", meaning: "Que usa com moderação, sem excessos.", example: "Ele foi parcimonioso nas palavras." },
-        { word: "Singular", meaning: "Único, diferente dos demais.", example: "Seu estilo é singular." }
+        { word: "Singular", meaning: "Único, diferente dos demais.", example: "Seu estilo é singular." },
+        { word: "Pragmático", meaning: "Voltado para soluções práticas.", example: "Vamos ser pragmáticos e resolver isso agora." },
+        { word: "Perspicaz", meaning: "Que compreende algo com clareza e rapidez.", example: "Seu comentário foi muito perspicaz." },
+        { word: "Versátil", meaning: "Que se adapta a várias situações.", example: "Esse material é muito versátil." },
+        { word: "Robusto", meaning: "Forte, resistente.", example: "Precisamos de um sistema mais robusto." },
+        { word: "Transparente", meaning: "Claro, sem esconder informações.", example: "A comunicação precisa ser transparente." },
+        { word: "Escalável", meaning: "Que pode crescer sem perder desempenho.", example: "O projeto é escalável." }
     ];
 
     let knownWords = JSON.parse(localStorage.getItem("knownWords")) || [];
@@ -115,7 +129,7 @@
     }
 
     function markKnown() {
-        if (!knownWords.includes(currentWord.word)) {
+        if (currentWord && !knownWords.includes(currentWord.word)) {
             knownWords.push(currentWord.word);
             localStorage.setItem("knownWords", JSON.stringify(knownWords));
         }
@@ -123,7 +137,7 @@
     }
 
     function markNew() {
-        if (!learnedWords.includes(currentWord.word)) {
+        if (currentWord && !learnedWords.includes(currentWord.word)) {
             learnedWords.push(currentWord.word);
             localStorage.setItem("learnedWords", JSON.stringify(learnedWords));
         }
