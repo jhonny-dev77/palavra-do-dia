@@ -20,17 +20,10 @@
             box-shadow: 0 6px 14px rgba(0,0,0,0.1);
             text-align: center;
         }
-        h1 {
-            margin-bottom: 10px;
-        }
         .word {
             font-size: 30px;
             font-weight: bold;
             margin: 15px 0;
-        }
-        .meaning {
-            font-size: 16px;
-            margin-bottom: 15px;
         }
         .example {
             font-size: 14px;
@@ -55,9 +48,7 @@
             font-size: 13px;
             color: #666;
         }
-        a {
-            text-decoration: none;
-        }
+        a { text-decoration: none; }
     </style>
 </head>
 <body>
@@ -65,41 +56,25 @@
 <div class="card">
     <h1>📖 Palavra do Dia</h1>
 
-    <!-- Botão para abrir a biblioteca de palavras -->
     <a href="lista.html">
         <button class="next">📚 Ver todas as palavras</button>
     </a>
 
     <div class="word" id="word">Carregando...</div>
-    <div class="meaning" id="meaning"></div>
+    <div id="meaning"></div>
     <div class="example" id="example"></div>
 
-    <button class="new" onclick="markNew()">📘 Palavra nova (aprendi agora)</button>
+    <button class="new" onclick="markNew()">📘 Palavra nova</button>
     <button class="known" onclick="markKnown()">✔ Palavra conhecida</button>
     <button class="next" onclick="nextWord()">🔄 Outra palavra</button>
 
     <div class="stats" id="stats"></div>
 </div>
 
-<script>
-    // Banco de palavras (você pode ampliar à vontade)
-    const words = [
-        { word: "Sutil", meaning: "Algo delicado, discreto, quase imperceptível.", example: "A diferença é sutil, mas importante." },
-        { word: "Conciso", meaning: "Que é dito de forma breve e clara.", example: "Seja conciso na explicação." },
-        { word: "Efêmero", meaning: "Algo que dura pouco tempo.", example: "A fama pode ser efêmera." },
-        { word: "Resiliente", meaning: "Capaz de se adaptar e superar dificuldades.", example: "Ele se manteve resiliente diante dos problemas." },
-        { word: "Meticuloso", meaning: "Muito cuidadoso e detalhista.", example: "O designer é meticuloso com cada detalhe." },
-        { word: "Inerente", meaning: "Que é próprio de algo, faz parte da sua natureza.", example: "O risco é inerente ao negócio." },
-        { word: "Parcimonioso", meaning: "Que usa com moderação, sem excessos.", example: "Ele foi parcimonioso nas palavras." },
-        { word: "Singular", meaning: "Único, diferente dos demais.", example: "Seu estilo é singular." },
-        { word: "Pragmático", meaning: "Voltado para soluções práticas.", example: "Vamos ser pragmáticos e resolver isso agora." },
-        { word: "Perspicaz", meaning: "Que compreende algo com clareza e rapidez.", example: "Seu comentário foi muito perspicaz." },
-        { word: "Versátil", meaning: "Que se adapta a várias situações.", example: "Esse material é muito versátil." },
-        { word: "Robusto", meaning: "Forte, resistente.", example: "Precisamos de um sistema mais robusto." },
-        { word: "Transparente", meaning: "Claro, sem esconder informações.", example: "A comunicação precisa ser transparente." },
-        { word: "Escalável", meaning: "Que pode crescer sem perder desempenho.", example: "O projeto é escalável." }
-    ];
+<!-- Banco de palavras -->
+<script src="palavras.js"></script>
 
+<script>
     let knownWords = JSON.parse(localStorage.getItem("knownWords")) || [];
     let learnedWords = JSON.parse(localStorage.getItem("learnedWords")) || [];
     let currentWord = null;
@@ -119,7 +94,7 @@
         const available = getAvailableWords();
         if (available.length === 0) {
             document.getElementById("word").textContent = "🎉 Parabéns!";
-            document.getElementById("meaning").textContent = "Você já marcou todas as palavras como conhecidas.";
+            document.getElementById("meaning").textContent = "Você já marcou todas como conhecidas.";
             document.getElementById("example").textContent = "";
             return;
         }
@@ -146,10 +121,9 @@
 
     function updateStats() {
         document.getElementById("stats").textContent =
-            "Conhecidas: " + knownWords.length + " | Novas aprendidas: " + learnedWords.length;
+            "Conhecidas: " + knownWords.length + " | Novas: " + learnedWords.length;
     }
 
-    // Inicialização
     nextWord();
 </script>
 
